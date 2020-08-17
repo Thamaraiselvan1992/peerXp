@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<?php session_start(); ?>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Add-Ticket</title>
+		<title>Tickets</title>
 
 		<meta name="description" content="3 styles with inline editable feature" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -47,11 +48,7 @@
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<style type="text/css">
-		.error{
-			color: red;
-		}
-	</style>
+
 	<body class="no-skin">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
@@ -154,154 +151,101 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#"> Add Tickets</a>
+								<a href="#">Tickets <?=$ticket['ticketNumber'];?></a>
 							</li>
 						</ul><!-- /.breadcrumb -->
 					</div>
-
-					<div class="page-header">
-							<h1>
-								Add Ticket
-								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-								
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
-
-						<div class="row">
-							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-								<form class="form-horizontal" id="addTicket" role="form" action="create_ticket.php" enctype="multipart/form-data" method="POST">
-									<h4 style="padding-left: 20px;"><b>Submit a ticket</b></h4>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">CCs</label>
-
-										<div class="col-sm-9 error">
-											<input type="text"  value="<?=$_SESSION['email'];?>" name="email" placeholder="Username" class="col-xs-10 col-sm-5" readonly="" />
+					<div class="page-content">
+						<div>
+								<div class="message-item offset-md-3 col-md-8 ">
+									<h4><b>	Properties</b></h4>
+									<div class="row">
+										<div class="col-md-3">
+											<label> <b>Ticket Id</b>	</label>
+										</div>
+										<div class="col-md-7">	
+											: <?=$ticket['ticketNumber'];?>
 										</div>
 									</div>
-									<h4 style="padding-left: 20px;"><b>Ticket Information</b></h4>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Department<span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<!-- <input type="text"  placeholder="Username" class="col-xs-10 col-sm-5" /> -->
-											<select class="col-xs-10 col-sm-5" name="department">
-																<option value="">Select Department</option>
-																<?php foreach ($departments['data'] as $department) { 
-																	?>
-															
-																<option value="<?=$department['id'];?>"><?=$department['name'];?></option>
-																<?php }?>
-															</select>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Created On</b></label>
+										</div>
+										<div class="col-md-5">	
+											: <?=date('d-M-Y',strtotime($ticket['createdTime']));?>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1" name="category"> Category <span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<!-- <input type="text"  placeholder="Username" class="col-xs-10 col-sm-5" /> -->
-											<select class="col-xs-10 col-sm-5" id="form-field-select-1" name="category">
-																<option value="">Select category</option>
-																<?php foreach ($categories as $category) { 
-																	?>
-															
-																<option value="<?=$category;?>"><?=$category;?></option>
-																<?php }?>
-															</select>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Status	</b></label>
+										</div>
+										<div class="col-md-5">	
+											: <?=$ticket['status'];?>
 										</div>
 									</div>
-									<div class="space-4"></div>
-
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> PWSLab Project URL <span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<input type="text"  value="" placeholder="Url" class="col-xs-10 col-sm-5" name="url"/>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Assigned To	</b></label>
+										</div>
+										<div class="col-md-5">	
+											: <?=$ticket['assignee'];?>
 										</div>
 									</div>
-
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2">Subject<span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<input type="text"  value="" placeholder="Subject" class="col-xs-10 col-sm-5" name="subject"/>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Channel	</b></label>
+										</div>
+										<div class="col-md-5">	
+											: <?=$ticket['channel'];?>
 										</div>
 									</div>
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2">Description<span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<textarea class="col-xs-10 col-sm-5" name="description"></textarea>
+									<h4><b>	Ticket Information</b></h4>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Department</b></label>
+										</div>
+										<div class="col-md-5">
+										 : <?=$ticket['department']['name']	;?>
 										</div>
 									</div>
-									<div class="space-4"></div>
-									<h4 style="padding-left: 20px;"><b>Contact Details</b></h4>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2">Phone</b></label>
-
-										<div class="col-sm-9">
-											<input type="text"   placeholder="Phone" class="col-xs-10 col-sm-5" name="phone" />
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>PWSLab Project URL</b></label>
+										</div>
+										<div class="col-md-5">
+										: <?=$ticket['cf']['cf_pwslab_project_url'];?>	
 										</div>
 									</div>
-									<h4 style="padding-left: 20px;"><b>Additional Information</b></h4>
-									
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Priority <span class="text-danger">*</span></b></label>
-
-										<div class="col-sm-9 error">
-											<select class="col-xs-10 col-sm-5" id="form-field-select-1" name="priority">
-																<option value="">Select priority</option>
-																<?php foreach ($priorities as $priority) { 
-																	?>
-															
-																<option value="<?=$priority;?>"><?=$priority;?></option>
-																<?php }?>
-															</select>
+									<h4><b>	Contact Details</b></h4>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Phone</b></label>
+										</div>
+										<div class="col-md-5">
+										: <?=$ticket['phone'];?>	
 										</div>
 									</div>
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"></label>
-
-										<div class="col-sm-9">
-													<div class="widget-main">
-														<div class="form-group">
-															<div class="col-xs-6 offset-md-6">
-																<input type="file" id="id-input-file-3" name="file"/>
-																<small>Attach a file(Up to 20 MB )</small>
-															</div>
-														</div>
-												     </div>
-									</div>
-								</div>
-
-
-									<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="submit" name="submit" >
-												<i class="ace-icon fa fa-check bigger-110"></i>
-												Submit
-											</button>
-
-											&nbsp; &nbsp; &nbsp;
-											<button class="btn" type="reset">
-												<i class="ace-icon fa fa-undo bigger-110"></i>
-												Reset
-											</button>
+									<h4><b>	Additional Information</b></h4>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Priority</b></label>
+										</div>
+										<div class="col-md-5">
+										: <?=$ticket['priority'];?>	
 										</div>
 									</div>
-
-								
-								</form>
-								<br>
-								<br>
-								</div>
-							</div>
+									<div class="row">
+										<div class="col-md-3">
+											<label><b>Email</b></label>
+										</div>
+										<div class="col-md-5">
+										: <?=$ticket['email'];?>	
+										</div>
+									</div>
+																			
+								</div>	
+						</div><!-- /.page-content -->
+					</div>
 			</div><!-- /.main-content -->
 
 			<div class="footer">
@@ -375,89 +319,7 @@
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
-				$('#id-input-file-3').ace_file_input({
-					style: 'well',
-					btn_choose: 'Drop files here or click to choose',
-					btn_change: null,
-					no_icon: 'ace-icon fa fa-cloud-upload',
-					droppable: true,
-					thumbnail: 'small'//large | fit
-					//,icon_remove:null//set null, to hide remove/reset button
-					/**,before_change:function(files, dropped) {
-						//Check an example below
-						//or examples/file-upload.html
-						return true;
-					}*/
-					/**,before_remove : function() {
-						return true;
-					}*/
-					,
-					preview_error : function(filename, error_code) {
-						//name of the file that failed
-						//error_code values
-						//1 = 'FILE_LOAD_FAILED',
-						//2 = 'IMAGE_LOAD_FAILED',
-						//3 = 'THUMBNAIL_FAILED'
-						//alert(error_code);
-					}
-			
-				}).on('change', function(){
-					//console.log($(this).data('ace_input_files'));
-					//console.log($(this).data('ace_input_method'));
-				});
+
 		</script>
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
-<script src="assets/js/jquery.validate.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      return true;
-    }
-  });
-  $('#addTicket').validate({
-    rules: {
-      email: {
-        required: true
-      },
-		subject: {
-        required: true
-      },
-		department:{
-        required: true
-      },
-		category:{
-        required: true
-      },
-      url:{
-      	required: true
-      },
-		priority:{
-        required: true
-      },
-		description:{
-        required: true
-      },
-		category:{
-        required: true
-      },
-    },
-
-   
-
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.error').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
 	</body>
 </html>

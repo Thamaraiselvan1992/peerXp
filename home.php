@@ -156,7 +156,7 @@
 						</ul><!-- /.breadcrumb -->
 					</div>
 
-					<?php if(isset($tickets)){ ?>
+					<?php if(isset($ticketList)){ ?>
 							<b style="padding-left: 20px;">Status:<h4>
 							<label style="padding-left: 20px;"><a href="#">Open <?php if($statusOpen){ echo "(".$statusOpen.")";};?></a><a href="#">Closed<?php if($statusClosed){ echo "(".$statusClosed.")";};?></a> <a href="#">  OnHold<?php if($statusOnHold){ echo "(".$statusOnHold.")";};?></a></label> 
 
@@ -166,16 +166,26 @@
 					<div class="page-content">
 						<div class="message-item">
 								<div class="message-item">
-									<span><b><?=$ticket['subject'];?></b></span><br>
-										<span class="time"><?=date('d-M-Y',strtotime($ticket['createdTime']));?></span>
+									<div class="row">
+									<div class="col-md-8">	
+										<b><a href="single_ticket.php?id=<?=$ticket['id'];?>"><?=$ticket['subject'];?></a></b>
+									</div>	
+									<div class="col-md-4">
+									<span style="float: right"><b>#<?=$ticket['ticketNumber'];?></b></span>	
+										
+									</div>	
+									</div>
+									<span><br>
+										
 											<span class="attachment">
 												<i class="ace-icon fa fa-paperclip"></i>
+												<span style="float: right"><?=date('d-M-Y',strtotime($ticket['createdTime']));?></span>
 											</span>
 											<span class="summary">
 												<span class="badge badge-success mail-tag"></span>
 												<span class="text"><?=$ticket['department']['name']?></span>
 											</span>
-										<span class="time"><b>#<?=$ticket['ticketNumber'];?></b></span>
+										
 								</div>	
 						</div><!-- /.page-content -->
 					</div>
